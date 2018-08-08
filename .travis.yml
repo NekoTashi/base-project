@@ -4,7 +4,8 @@ python:
     - "3.6"
 
 before_install:
-    - sudo apt-get install -qq musl-dev perl file libxml2-dev postgresql-client
+    - sudo apt-get update
+    - sudo apt-get install -qq musl-dev postgresql-dev perl file libxml2-dev libgcc postgresql-client
     - sudo apt-get install -qq jpeg-dev zlib-dev freetype-dev lcms2-dev openjpeg-dev tiff-dev tk-dev tcl-dev
     - sudo apt-get install -qq libffi-dev py-cffi
     - sudo apt-get install -qq gettext
