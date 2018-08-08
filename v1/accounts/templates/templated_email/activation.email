@@ -1,0 +1,11 @@
+
+{% block subject %}Activation{% endblock %}
+{% block plain %}
+{{ from_email }}
+{{ user }}
+{{ host }}
+{{ scheme }}
+{{ uid }}
+{{ token }}
+{% endblock %}
+
