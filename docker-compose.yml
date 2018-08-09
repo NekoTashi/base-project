@@ -1,79 +1,87 @@
 version: '3'
 
+
 services:
 
-  app:
-    restart: always
-    build:
-      context: .
-      dockerfile: ./compose/prod/app/Dockerfile
-    command: /start.sh
-    env_file: .env
-    volumes:
-      - ./static/:/public/static/
-      - ./media/:/public/media/
-    expose:
-      - "5000"
-    depends_on:
-      - db
-      - redis
 
-  celeryworker:
-    restart: always
-    build:
-      context: .
-      dockerfile: ./compose/prod/app/Dockerfile
-    command: celery -A v1.taskapp.celery worker -l INFO
-    env_file: .env
-    volumes:
-      - ./static/:/public/static/
-      - ./media/:/public/media/
-    depends_on:
-      - db
-      - redis
+    app:
+        restart: always
+        build:
+            context: .
+            dockerfile: ./compose/prod/app/Dockerfile
+        command: /start.sh
+        env_file: .env
+        volumes:
+            - ./static/:/public/static/
+            - ./media/:/public/media/
+        expose:
+            - "5000"
+        depends_on:
+            - db
+            - redis
 
-  celerybeat:
-    restart: always
-    build:
-      context: .
-      dockerfile: ./compose/prod/app/Dockerfile
-    command: celery -A v1.taskapp.celery beat -l INFO
-    env_file: .env
-    volumes:
-      - ./static/:/public/static/
-      - ./media/:/public/media/
-    depends_on:
-      - db
-      - redis
 
-  db:
-    restart: always
-    build:
-      context: .
-      dockerfile: ./compose/prod/db/Dockerfile
-    env_file: .env
-    volumes:
-      - postgis:/var/lib/postgresql/data
+    celeryworker:
+        restart: always
+        build:
+            context: .
+            dockerfile: ./compose/prod/app/Dockerfile
+        command: celery -A v1.taskapp.celery worker -l INFO
+        env_file: .env
+        volumes:
+            - ./static/:/public/static/
+            - ./media/:/public/media/
+        depends_on:
+            - db
+            - redis
 
-  redis:
-    restart: always
-    image: redis
-    volumes:
-      - redis:/data
 
-  nginx:
-    restart: always
-    build:
-      context: .
-      dockerfile: ./compose/prod/nginx/Dockerfile
-    volumes:
-      - ./media:/public/media:ro
-      - ./static:/public/static:ro
-    ports:
-      - "80:80"
-    depends_on:
-      - app
+    celerybeat:
+        restart: always
+        build:
+            context: .
+            dockerfile: ./compose/prod/app/Dockerfile
+        command: celery -A v1.taskapp.celery beat -l INFO
+        env_file: .env
+        volumes:
+            - ./static/:/public/static/
+            - ./media/:/public/media/
+        depends_on:
+            - db
+            - redis
+
+
+    db:
+        restart: always
+        build:
+            context: .
+            dockerfile: ./compose/prod/db/Dockerfile
+        env_file: .env
+        volumes:
+            - postgis:/var/lib/postgresql/data
+
+
+    redis:
+        restart: always
+        image: redis
+        volumes:
+            - redis:/data
+
+
+    nginx:
+        restart: always
+        build:
+            context: .
+            dockerfile: ./compose/prod/nginx/Dockerfile
+        volumes:
+            - ./media:/public/media:ro
+            - ./static:/public/static:ro
+        ports:
+            - "80:80"
+        depends_on:
+            - app
+
 
 volumes:
-  postgis:
-  redis:
+    postgis:
+    redis:
