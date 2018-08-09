@@ -66,7 +66,12 @@ LOCAL_DATABASE_URL = FORMAT_DATABASE_URL.format(
     port=5432,
     database_name="baseproject",
 )
-DATABASES = {"default": env.db("DATABASE_URL", default=LOCAL_DATABASE_URL)}
+DATABASES = {
+    "default": env.db(
+        "DATABASE_URL",
+        # default=LOCAL_DATABASE_URL
+    )
+}
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 
 # GENERAL CONFIG

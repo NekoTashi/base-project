@@ -7,7 +7,7 @@ python:
     - "3.6"
 
 env:
-    - DB="baseproject" DATABASE_URL="postgis://postgres@localhost:5432/$DB"
+    - DB="baseproject" DATABASE_URL="postgis://postgres@localhost/$DB"
 
 addons:
     postgresql: 9.6
