@@ -1,14 +1,7 @@
 language: python
 
-# sudo: false
-# cache: pip
-
 python:
     - "3.6"
-
-env:
-    global:
-        - DB="baseproject" DATABASE_URL="postgis://postgres@localhost/${DB}"
 
 addons:
     postgresql: 9.6
@@ -20,6 +13,8 @@ addons:
             - libgeos-dev
 
 before_script:
+    - export DB="baseproject"
+    - export DATABASE_URL="postgis://postgres@localhost/${DB}"
     - psql -c "create database ${DB};" -U postgres
     - psql -c "create extension postgis;" -U postgres
 
