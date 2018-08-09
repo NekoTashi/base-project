@@ -14,7 +14,6 @@ addons:
 
 before_script:
     - export DB="baseproject"
-    - export DATABASE_URL="postgis://postgres@localhost/${DB}"
     - psql -c "create database ${DB};" -U postgres
     - psql -c "create extension postgis;" -U postgres
 
@@ -22,7 +21,8 @@ install:
     - make
 
 script:
-    make test
+    - export DATABASE_URL="postgis://postgres@localhost/${DB}"
+    - make test
 
 after_success:
     coveralls
