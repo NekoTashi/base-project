@@ -7,7 +7,7 @@ python:
     - "3.6"
 
 env:
-    - DB=baseproject DATABASE_URL=postgis://postgres@localhost:5432/$DB
+    - DB="baseproject" DATABASE_URL="postgis://postgres@localhost:5432/$DB"
 
 addons:
     postgresql: 9.6
@@ -19,7 +19,7 @@ addons:
             - libgeos-dev
 
 before_script:
-    - psql -c "create database baseproject;" -U postgres
+    - psql -c "create database $DB;" -U postgres
     - psql -c "create extension postgis;" -U postgres
 
 install:
