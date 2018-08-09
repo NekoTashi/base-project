@@ -1,6 +1,5 @@
 language: python
 
-# dist: trusty
 # sudo: false
 # cache: pip
 
@@ -8,9 +7,8 @@ python:
     - "3.6"
 
 env:
-    global:
-        - DB=baseproject
-        - DATABASE_URL=postgis://postgres@localhost:5432/$DB
+    - DB=baseproject
+    - DATABASE_URL=postgis://postgres@localhost:5432/$DB
 
 addons:
     postgresql: 9.6
