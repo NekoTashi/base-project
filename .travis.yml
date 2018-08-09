@@ -10,7 +10,7 @@ python:
 env:
     global:
         - DB=baseproject
-        - DATABASE_URL=postgis://postgres@db:5432/baseproject
+        - DATABASE_URL=postgis://postgres@localhost:5432/$DB
 
 addons:
     postgresql: 9.6
@@ -28,7 +28,11 @@ before_script:
 install:
     - make
 
-script: make test
+script:
+    make test
+
+after_success:
+    coveralls
 
 # language: python
 
