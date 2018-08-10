@@ -14,7 +14,7 @@ before_script:
     - export POSTGRES_USER="test"
     - psql -c "create database ${POSTGRES_USER}" -U postgres
     - psql -c "create extension postgis;" -U postgres
-    - export DATABASE_URL="postgis://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_USER}"
+    - export DATABASE_URL="postgis://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:5432/${POSTGRES_USER}"
 install:
     - make
     - pipenv install coveralls --skip-lock
