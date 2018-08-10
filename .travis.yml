@@ -1,8 +1,9 @@
 ---
 sudo: required
 services:
-  - docker
+    - docker
 before_install:
-  - touch .env.local
+    - touch .env.local
 script:
-  - docker-compose -f dev.yml run app pytest --cov-report term --cov=v1
+    - docker-compose -f dev.yml run app pytest --cov-report term --cov=v1
+    - docker-compose -f dev.yml run app coveralls
