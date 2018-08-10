@@ -1,0 +1,16 @@
+[
+  "v1/accounts/tests/test_views.py::LoginViewTestCase::test_login_with_valid_data",
+  "v1/accounts/tests/test_views.py::LoginViewTestCase::test_login_with_wrong_password",
+  "v1/accounts/tests/test_views.py::LoginViewTestCase::test_login_without_email",
+  "v1/accounts/tests/test_views.py::RegistrationViewTestCase::test_registration_without_email_activation",
+  "v1/accounts/tests/test_views.py::PasswordResetViewTestCase::test_password_reset_with_invalid_email",
+  "v1/accounts/tests/test_views.py::PasswordResetViewTestCase::test_password_reset_with_invalid_format_email",
+  "v1/accounts/tests/test_views.py::PasswordResetViewTestCase::test_password_reset_with_valid_email",
+  "v1/accounts/tests/test_views.py::PasswordResetConfirmViewTestCase::test_password_reset_confirm_with_invalid_token",
+  "v1/accounts/tests/test_views.py::PasswordResetConfirmViewTestCase::test_password_reset_confirm_with_invalid_uid",
+  "v1/accounts/tests/test_views.py::PasswordResetConfirmViewTestCase::test_password_reset_confirm_with_valid_data",
+  "v1/accounts/tests/test_views.py::MeViewTestCase::test_me_get_user_data",
+  "v1/accounts/tests/test_views.py::MeViewTestCase::test_me_update_user_data",
+  "v1/accounts/tests/test_views.py::ActivationViewTestCase::test_activation_with_invalid_data",
+  "v1/accounts/tests/test_views.py::ActivationViewTestCase::test_activation_with_valid_data"
+]

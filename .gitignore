@@ -58,7 +58,3 @@ mailhog
 
 # -- Celery
 celerybeat-schedule
-
-# Static and Media
-static/
-media/
