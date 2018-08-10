@@ -66,13 +66,6 @@ LOCAL_DATABASE_URL = FORMAT_DATABASE_URL.format(
     port=5432,
     database_name="baseproject",
 )
-# LOCAL_DATABASE_URL = FORMAT_DATABASE_URL.format(
-#     user=env("POSTGRES_USER", default="dev"),
-#     password=env("POSTGRES_PASSWORD", default=""),
-#     hostname="localhost",
-#     port=5432,
-#     database_name=env("POSTGRES_DB", default="palletparking"),
-# )
 DATABASES = {"default": env.db("DATABASE_URL", default=LOCAL_DATABASE_URL)}
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
 

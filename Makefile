@@ -15,7 +15,7 @@ cove:
 	open htmlcov/index.html
 
 test:
-	tox
+	pipenv run pytest --cov-report term --cov=v1
 
 clean:
 	rm -rf .tox/
