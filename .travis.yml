@@ -5,6 +5,4 @@ services:
 before_install:
     - touch .env.local
 script:
-    - docker-compose -f dev.yml build
     - docker-compose -f dev.yml run app pytest --cov-report term --cov=v1
-    - docker-compose -f dev.yml run app coveralls
