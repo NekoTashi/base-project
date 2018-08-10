@@ -23,7 +23,9 @@ RUN set -ex \
         # Translations dependencies
         gettext \
         # GeoDjango dependecies
-        gdal-dev geos
+        gdal-dev geos \
+        # Extra dependecies
+        git
 
 # -- Installing Python packages
 COPY Pipfile /Pipfile
