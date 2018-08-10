@@ -1,31 +1,40 @@
-language: python
-
-python:
-    - "3.6"
-
-addons:
-    postgresql: 9.6
-    apt:
-        update: true
-        packages:
-            - postgresql-9.6-postgis-2.3
-            - libproj-dev
-            - libgeos-dev
-
-before_script:
-    - export DB="baseproject"
-    - psql -c "create database ${DB};" -U postgres
-    - psql -c "create extension postgis;" -U postgres
-
-install:
-    - make
-
+---
+sudo: required
+services:
+  - docker
+before_install:
+  - touch .env.local
 script:
-    - export DATABASE_URL="postgis://postgres@localhost/${DB}"
-    - make test
+  - docker-compose -f dev.yml run app pytest --cov-report term --cov=v1
 
-after_success:
-    coveralls
+# language: python
+
+# python:
+#     - "3.6"
+
+# addons:
+#     postgresql: 9.6
+#     apt:
+#         update: true
+#         packages:
+#             - postgresql-9.6-postgis-2.3
+#             - libproj-dev
+#             - libgeos-dev
+
+# before_script:
+#     - cp .env.example .env
+#     - psql -c "create database ${DB};" -U postgres
+#     - psql -c "create extension postgis;" -U postgres
+
+# install:
+#     - make
+
+# script:
+#     - export DATABASE_URL="postgis://postgres@localhost/${DB}"
+#     - make test
+
+# after_success:
+#     coveralls
 
 # language: python
 

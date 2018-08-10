@@ -7,7 +7,9 @@ REQUEST_TIMEOUT=30
 NUM_WORKERS="$((2 * $(getconf _NPROCESSORS_ONLN) + 1))"
 DJANGO_WSGI_MODULE="config.wsgi"
 
-exec gunicorn \
+python manage.py migrate
+python manage.py collectstatic --noinput
+gunicorn \
     --log-level debug \
     --bind :"$PORT" \
     --max-requests "$MAX_REQUESTS" \

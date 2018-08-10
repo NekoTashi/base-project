@@ -48,7 +48,8 @@ htmlcov
 *.swo
 
 # -- virtual environments
-.envgi
+.env
+.env.local
 
 # -- MailHog binary
 mailhog

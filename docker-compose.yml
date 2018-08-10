@@ -1,14 +1,18 @@
 version: '3'
 
 
-services:
+volumes:
+    postgis:
+    redis:
 
+
+services:
 
     app:
         restart: always
         build:
             context: .
-            dockerfile: ./compose/prod/app/Dockerfile
+            dockerfile: ./compose/app/Dockerfile
         command: /start.sh
         env_file: .env
         volumes:
@@ -20,12 +24,11 @@ services:
             - db
             - redis
 
-
     celeryworker:
         restart: always
         build:
             context: .
-            dockerfile: ./compose/prod/app/Dockerfile
+            dockerfile: ./compose/app/Dockerfile
         command: celery -A v1.taskapp.celery worker -l INFO
         env_file: .env
         volumes:
@@ -35,12 +38,11 @@ services:
             - db
             - redis
 
-
     celerybeat:
         restart: always
         build:
             context: .
-            dockerfile: ./compose/prod/app/Dockerfile
+            dockerfile: ./compose/app/Dockerfile
         command: celery -A v1.taskapp.celery beat -l INFO
         env_file: .env
         volumes:
@@ -50,16 +52,14 @@ services:
             - db
             - redis
 
-
     db:
         restart: always
         build:
             context: .
-            dockerfile: ./compose/prod/db/Dockerfile
+            dockerfile: ./compose/db/Dockerfile
         env_file: .env
         volumes:
             - postgis:/var/lib/postgresql/data
-
 
     redis:
         restart: always
@@ -67,12 +67,11 @@ services:
         volumes:
             - redis:/data
 
-
     nginx:
         restart: always
         build:
             context: .
-            dockerfile: ./compose/prod/nginx/Dockerfile
+            dockerfile: ./compose/nginx/Dockerfile
         volumes:
             - ./media:/public/media:ro
             - ./static:/public/static:ro
@@ -80,8 +79,3 @@ services:
             - "80:80"
         depends_on:
             - app
-
-
-volumes:
-    postgis:
-    redis:

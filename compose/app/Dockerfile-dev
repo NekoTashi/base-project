@@ -1,10 +1,9 @@
-
-FROM python:3.7.0-alpine3.8
+FROM python:3.6.6-alpine3.8
 
 ENV PYTHONUNBUFFERED=1
 
 # -- Default envs
-ENV DJANGO_SETTINGS_MODULE=config.settings.production
+ENV DJANGO_SETTINGS_MODULE=config.settings.local
 
 # -- Installing dependencies
 RUN set -ex \
@@ -32,14 +31,14 @@ COPY Pipfile.lock /Pipfile.lock
 
 RUN set -ex && pip install pip --upgrade
 RUN set -ex && pip install pipenv
-RUN set -ex && pipenv install --deploy --system --skip-lock
+RUN set -ex && pipenv install --dev --system --skip-lock
 
 # -- Adding entrypoint.sh and start.sh scripts inside the container
-COPY ./compose/prod/app/entrypoint.sh /entrypoint.sh
-COPY ./compose/prod/app/start.sh /start.sh
+COPY ./compose/app/entrypoint.sh /entrypoint.sh
+COPY ./compose/app/start-dev.sh /start-dev.sh
 
 RUN set -ex && chmod +x /entrypoint.sh
-RUN set -ex && chmod +x /start.sh
+RUN set -ex && chmod +x /start-dev.sh
 
 # -- Adding the code inside the container
 RUN set -ex && mkdir /code/

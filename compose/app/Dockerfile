@@ -1,0 +1,48 @@
+FROM python:3.6.6-alpine3.8
+
+ENV PYTHONUNBUFFERED=1
+
+# -- Default envs
+ENV DJANGO_SETTINGS_MODULE=config.settings.production
+
+# -- Installing dependencies
+RUN set -ex \
+\
+    # Replacing default repositories with edge ones
+    && echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" > /etc/apk/repositories \
+    && echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
+    && echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" >> /etc/apk/repositories \
+\
+    && apk add --no-cache build-base linux-headers \
+        # psycopg2 dependencies
+        musl-dev postgresql-dev perl file libxml2-dev libgcc postgresql-client \
+        # Pillow dependencies
+        jpeg-dev zlib-dev freetype-dev lcms2-dev openjpeg-dev tiff-dev tk-dev tcl-dev \
+        # CFFI dependencies
+        libffi-dev py-cffi \
+        # Translations dependencies
+        gettext \
+        # GeoDjango dependecies
+        gdal-dev geos
+
+# -- Installing Python packages
+COPY Pipfile /Pipfile
+COPY Pipfile.lock /Pipfile.lock
+
+RUN set -ex && pip install pip --upgrade
+RUN set -ex && pip install pipenv
+RUN set -ex && pipenv install --deploy --system --skip-lock
+
+# -- Adding entrypoint.sh and start.sh scripts inside the container
+COPY ./compose/app/entrypoint.sh /entrypoint.sh
+COPY ./compose/app/start.sh /start.sh
+
+RUN set -ex && chmod +x /entrypoint.sh
+RUN set -ex && chmod +x /start.sh
+
+# -- Adding the code inside the container
+RUN set -ex && mkdir /code/
+WORKDIR /code/
+COPY . /code/
+
+ENTRYPOINT ["/entrypoint.sh"]

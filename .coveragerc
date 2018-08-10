@@ -1,5 +1,5 @@
 [run]
 source = .
-omit = *migrations*, *tests*
+omit = */migrations/*,*/tests/*,*/config/*,*/wsgi.py
 plugins =
     django_coverage_plugin

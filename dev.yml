@@ -1,9 +1,42 @@
-version: '2'
+---
+version: '3'
+
+
+volumes:
+    postgis:
+    redis:
+
 
 services:
 
-  mailhog:
-    image: mailhog/mailhog
-    ports:
-      - "8025:8025"
-      - "1025:1025"
+    app:
+        build:
+            context: .
+            dockerfile: ./compose/app/Dockerfile-dev
+        command: /start-dev.sh
+        env_file: .env.local
+        environment:
+            - POSTGRES_USER=baseproject
+        volumes:
+            - ./static/:/public/static/
+            - ./media/:/public/media/
+        expose:
+            - "5000"
+        depends_on:
+            - db
+            - redis
+
+    db:
+        build:
+            context: .
+            dockerfile: ./compose/db/Dockerfile
+        env_file: .env.local
+        environment:
+            - POSTGRES_USER=baseproject
+        volumes:
+            - postgis:/var/lib/postgresql/data
+
+    redis:
+        image: redis
+        volumes:
+            - redis:/data
