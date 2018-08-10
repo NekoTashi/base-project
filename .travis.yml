@@ -11,10 +11,9 @@ before_script:
     - sudo apt-get -qq update
     - sudo apt-get install -qq postgresql-9.6-postgis-2.4
     - sudo apt-get install -qq python-gdal
-    - export POSTGRES_USER="test"
-    - psql -c "create database ${POSTGRES_USER}" -U postgres
     - psql -c "create extension postgis;" -U postgres
-    - export DATABASE_URL="postgis://${POSTGRES_USER}:${POSTGRES_PASSWORD}@localhost:5432/${POSTGRES_USER}"
+    - psql -c "create database test;" -U postgres
+    - export DATABASE_URL="postgis://postgres:@localhost:5432/test"
 install:
     - make
     - pipenv install coveralls --skip-lock
